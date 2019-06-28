@@ -8,6 +8,41 @@ import pandas as pd
 import json
 import numpy as np
 
+
+def parse_expression(expr):
+    parsed = []
+
+    for c in expr:
+        if c.isalnum():
+            if len(parsed) > 0 and parsed[-1][-1].isalnum():
+                parsed[-1] += c
+            else:
+                parsed.append(c)
+
+        else:
+            parsed.append(c)
+
+    return parsed
+
+def shunting_yard(expr):
+    tokens = parse_expression(expr)
+    output_stack = []
+    op_stack = []
+
+    precedence = {
+        '+': 0,
+        '-': 0,
+        '*': 1,
+        '/': 1
+    }
+
+    for tok in tokens:
+        if tok.isalnum():
+            output_stack.append(tok)
+        else:
+            pass
+
+
 df_test = pd.DataFrame({'A': [5], 'B': [6], 'C': [7]})
 
 df = pd.read_csv(
